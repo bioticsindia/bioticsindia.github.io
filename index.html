@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biotics India — Coming Soon</title>
+
+  <!-- Comfortaa Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --lavender: #C9A7FF; /* primary lavender accent */
+      --bg-overlay: rgba(0,0,0,0.55);
+      --muted: rgba(230,230,240,0.95);
+      --font-sans: "Comfortaa", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:var(--font-sans);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background:#000;
+    }
+
+    /* full-bleed background using uploaded image (replace path if needed) */
+    .bg {
+      position:fixed;
+      inset:0;
+      background: url("pic.png") center/cover no-repeat;
+      z-index: -2;
+      filter: contrast(0.9) saturate(0.6);
+    }
+    .overlay {
+      position:fixed;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));
+      z-index:-1;
+    }
+
+    .container{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:2rem;
+      padding:6vh 6vw;
+      box-sizing:border-box;
+    }
+
+    .left {
+      max-width:52%;
+    }
+
+    .brand {
+      display:inline-block;
+      font-size:0.9rem;
+      margin-bottom:1.2rem;
+      color:rgba(255,255,255,0.95);
+      letter-spacing:1px;
+    }
+
+    .headline{
+      font-size:clamp(3rem, 8vw, 7.5rem);
+      line-height:0.95;
+      font-weight:700;
+      margin:0;
+      color: #ffffff;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+      font-family: var(--font-sans);
+    }
+
+    /* right info card */
+    .right {
+      width:420px;
+      max-width:38%;
+      background: rgba(255,255,255,0.03);
+      border-radius:28px;
+      padding:28px;
+      backdrop-filter: blur(6px) saturate(1.05);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+      color:var(--muted);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .right h3{
+      margin:0 0 12px 0;
+      font-size:1.05rem;
+      color:var(--lavender);
+    }
+    .right p { margin:0 0 18px 0; font-size:0.95rem; color:rgba(230,230,240,0.95) }
+
+    .field {
+      display:block;
+      width:100%;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      margin-bottom:12px;
+      box-sizing:border-box;
+      font-size:0.95rem;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:10px 18px;
+      border-radius:999px;
+      background:var(--lavender);
+      color:#0b0b0b;
+      font-weight:700;
+      border: none;
+      cursor: default; /* static */
+    }
+
+    /* contact block bottom-right */
+    .contact-spot {
+      position:fixed;
+      right:6vw;
+      bottom:6vh;
+      text-align:right;
+      z-index:5;
+      color:rgba(255,255,255,0.95);
+      font-size:0.95rem;
+      line-height:1.35;
+      background: rgba(0,0,0,0.25);
+      padding:12px 14px;
+      border-radius:6px;
+      border:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(4px);
+    }
+
+    .contact-spot a {
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    /* responsive */
+    @media (max-width:900px){
+      .container { flex-direction:column; align-items:flex-start; padding:6vh 5vw }
+      .left { max-width:100% }
+      .right { width:100%; max-width:100%; margin-top:18px }
+      .headline { font-size:clamp(2.2rem, 9vw, 4.2rem) }
+      .contact-spot { right:5vw; bottom:4vh; font-size:0.92rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <main class="container" role="main" aria-labelledby="coming-soon">
+    <div class="left" >
+      <div class="brand">Biotics India — Biomedical Instruments</div>
+      <h1 id="coming-soon" class="headline">
+        A New<br />
+        Experience<br />
+        in Biomedical<br />
+        Analytics
+      </h1>
+    </div>
+
+    <aside class="right" aria-label="Contact & information">
+      <h3>Stay informed</h3>
+      <p>We're building a modern biochemistry analyser. Leave your email and we'll let you know when we launch.</p>
+
+      <input class="field" type="email" placeholder="Email address" aria-label="Email address" />
+
+      <div style="display:flex; align-items:center; gap:12px; margin-top:6px;">
+        <button class="btn" aria-hidden="true">Notify me</button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Contact block at bottom-right -->
+  <div class="contact-spot" aria-hidden="false">
+    <div style="font-weight:700; color:var(--lavender); margin-bottom:6px;">Contact</div>
+    <div><a href="tel:+917009701629">7009701629</a></div>
+    <div><a href="mailto:biotics_india@hotmail.com">biotics_india@hotmail.com</a></div>
+    <div>New Delhi, India</div>
+  </div>
+</body>
+</html>
