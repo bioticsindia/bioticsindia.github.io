@@ -19,6 +19,10 @@
       --card-bg: rgba(255,255,255,0.03);
       --btn-bg: rgba(255,255,255,0.75);
       --card-border: rgba(255,255,255,0.06);
+
+      /* responsive spacing tokens */
+      --page-padding-v: 6vh;
+      --page-padding-h: 6vw;
     }
 
     body.light {
@@ -38,13 +42,15 @@
       font-family: "Comfortaa", "Segoe UI", Roboto, sans-serif;
       color: var(--text);
       background: var(--bg);
-      transition: background 0.4s ease, color 0.4s ease;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
+    /* background + overlay */
     .bg {
       position: fixed;
       inset: 0;
       z-index: -2;
+      background-size: cover;
       filter: contrast(0.9) saturate(0.6);
     }
 
@@ -53,61 +59,76 @@
       inset: 0;
       background: linear-gradient(180deg, var(--overlay1), var(--overlay2));
       z-index: -1;
-      transition: background 0.4s ease;
+      transition: background 0.35s ease;
     }
 
+    /* layout container: allow wrap so items never overlap */
     .container {
       min-height: 100vh;
       display: flex;
+      flex-wrap: wrap;               /* <- allows the right card to wrap under headline */
       align-items: center;
       justify-content: space-between;
-      gap: 2rem;
-      padding: 6vh 6vw;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      padding: calc(var(--page-padding-v) + 36px) var(--page-padding-h) 6vh; /* top padding reserves space for toggle */
       box-sizing: border-box;
+      background: var(--bg);
     }
 
-    .left { max-width: 52%; }
+    /* left column (headline) */
+    .left {
+      flex: 1 1 480px;               /* grow, shrink, base */
+      min-width: 260px;
+      max-width: 65%;
+      word-break: break-word;
+    }
 
     .brand {
       display: inline-block;
       font-size: 0.9rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
       color: var(--text);
       letter-spacing: 1px;
     }
 
     .headline {
-      font-size: clamp(3rem, 8vw, 7.5rem);
-      line-height: 0.95;
+      font-size: clamp(2.4rem, 7vw, 6.5rem);
+      line-height: 0.98;
       font-weight: 700;
       margin: 0;
       color: var(--text);
       text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+      white-space: pre-line; /* respect manual line breaks */
     }
 
+    /* right column (card) */
     .right {
-      width: 420px;
-      max-width: 38%;
+      flex: 0 0 420px;               /* do not let it shrink too much on wide screens */
+      min-width: 260px;
+      max-width: 100%;
       background: var(--card-bg);
       border-radius: 28px;
       padding: 28px;
       backdrop-filter: blur(6px) saturate(1.05);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.45);
       color: var(--text);
       border: 1px solid var(--card-border);
-      transition: background 0.4s ease, color 0.4s ease, border 0.4s ease;
+      transition: all 0.35s ease;
+      box-sizing: border-box;
     }
 
     .right h3 {
       margin: 0 0 12px 0;
       font-size: 1.05rem;
       color: var(--lavender);
+      text-align: left;
     }
 
     .right p {
       margin: 0 0 18px 0;
       font-size: 0.95rem;
       color: var(--text);
+      line-height: 1.3;
     }
 
     .field {
@@ -132,58 +153,108 @@
       color: #0b0b0b;
       font-family: "Comfortaa", "Segoe UI", Roboto, sans-serif;
       border: none;
-      cursor: default;
+      cursor: pointer;
     }
 
+    /* contact block: fixed on large screens, normal flow on small */
     .contact-spot {
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.35;
+      transition: all 0.35s ease;
+      backdrop-filter: blur(4px);
+      /* default to fixed for desktop; overridden in small screens with media queries */
       position: fixed;
       right: 6vw;
       bottom: 6vh;
       text-align: right;
-      z-index: 5;
-      color: var(--text);
-      font-size: 0.95rem;
-      line-height: 1.35;
-      background: rgba(0,0,0,0);
-      padding: 12px 14px;
+      z-index: 14;
+      padding: 8px 12px;
       border-radius: 6px;
-      backdrop-filter: blur(4px);
-      transition: background 0.4s ease, color 0.4s ease;
     }
 
     .contact-spot a {
       color: var(--text);
       text-decoration: none;
       font-weight: 600;
+      display: inline-block;
     }
 
-    /* Toggle button */
+    /* mode toggle: always visible, higher z-index and small reserved top padding */
     .mode-toggle {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 12px;
+      right: 12px;
+      z-index: 30;
       background: var(--btn-bg);
       color: var(--btn-text);
       border: 1px solid var(--card-border);
-      padding: 8px 14px;
-      border-radius: 20px;
+      padding: 8px 12px;
+      border-radius: 999px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-family: "Comfortaa", "Segoe UI", Roboto, sans-serif;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(5px);
+      transition: all 0.25s ease;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .mode-toggle:hover {
-      background: var(--lavender);
-      color: #000;
+    .mode-toggle:hover { transform: translateY(-2px); }
+
+    /* ---- BREAKPOINTS ---- */
+
+    /* Large tablets / small laptops */
+    @media (max-width: 1024px) {
+      :root { --page-padding-v: 7vh; --page-padding-h: 5vw; }
+      .container { padding-top: calc(var(--page-padding-v) + 44px); } /* keep more room for toggle */
+      .left { max-width: 100%; }
+      .right { flex: 0 0 520px; width: 100%; }
+      .headline { font-size: clamp(2.2rem, 7.5vw, 4.8rem); }
+      .contact-spot { right: 4.5vw; bottom: 4.5vh; }
     }
 
-    @media (max-width:900px) {
-      .container { flex-direction: column; align-items: flex-start; padding: 6vh 5vw; }
-      .left { max-width: 100%; }
-      .right { width: 100%; max-width: 100%; margin-top: 18px; }
-      .headline { font-size: clamp(2.2rem, 9vw, 4.2rem); }
-      .contact-spot { right: 5vw; bottom: 4vh; font-size: 0.92rem; }
+    /* Small phones / portrait */
+    @media (max-width: 600px) {
+      :root { --page-padding-v: 5vh; --page-padding-h: 4vw; }
+      .container {
+        padding: calc(var(--page-padding-v) + 56px) var(--page-padding-h) 4vh;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .left, .right { width: 100%; max-width: 100%; flex-basis: 100%; }
+      .left { text-align: center; }
+      .right { padding: 20px; border-radius: 14px; margin-top: 18px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+      .right h3, .right p { text-align: center; }
+      .headline { font-size: clamp(1.8rem, 10vw, 3.6rem); }
+      .field { font-size: 0.95rem; padding: 12px 14px; }
+      .btn { width: 100%; text-align: center; padding: 12px; }
+      /* make contact block flow under the content so it won't overlap the card */
+      .contact-spot {
+        position: static;
+        margin: 20px auto 40px;
+        text-align: center;
+        display: block;
+      }
+      .mode-toggle { top: 10px; right: 10px; padding: 6px 10px; }
+    }
+
+    /* Extra small narrow screens */
+    @media (max-width: 380px) {
+      .headline { font-size: 1.9rem; line-height: 1.05; }
+      .right { padding: 16px; }
+      .brand { font-size: 0.85rem; }
+      .mode-toggle { padding: 6px 8px; font-size: 0.82rem; }
+    }
+
+    /* small visual polish: avoid input/button overlapping by stacking if needed */
+    .right .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    @media (max-width: 460px) {
+      .right .actions { flex-direction: column; align-items: stretch; }
+      .right .actions .btn { width: 100%; }
     }
   </style>
 </head>
@@ -207,19 +278,21 @@
     <aside class="right" aria-label="Contact & information">
       <h3>Stay informed</h3>
       <p>We're building modern biochemistry devices. Leave your email and we'll let you know when we launch.</p>
+
       <input class="field" type="email" placeholder="Email address" aria-label="Email address" />
-      <div style="display:flex; align-items:center; gap:12px; margin-top:6px;">
+
+      <div class="actions" style="margin-top:6px;">
         <button class="btn" aria-hidden="true">Notify me</button>
       </div>
     </aside>
-  </main>
 
-  <div class="contact-spot" aria-hidden="false">
-    <div style="font-weight:700; color:var(--lavender); margin-bottom:6px;">Contact</div>
-    <div><a href="tel:+917009701629">+91 700 970 1629</a></div>
-    <div><a href="mailto:biotics_india@hotmail.com">biotics_india@hotmail.com</a></div>
-    <div>New Delhi, India</div>
-  </div>
+    <div class="contact-spot" aria-hidden="false">
+      <div style="font-weight:700; color:var(--lavender); margin-bottom:6px;">Contact</div>
+      <div><a href="tel:+917009701629">+91 700 970 1629</a></div>
+      <div><a href="mailto:biotics_india@hotmail.com">biotics_india@hotmail.com</a></div>
+      <div>New Delhi, India</div>
+    </div>
+  </main>
 
   <script>
     const toggle = document.getElementById('modeToggle');
@@ -227,6 +300,21 @@
       document.body.classList.toggle('light');
       toggle.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
     });
+
+    /* Optional: remember user preference */
+    (function() {
+      try {
+        const saved = localStorage.getItem('biotics-theme');
+        if (saved === 'light') {
+          document.body.classList.add('light');
+          toggle.textContent = 'Dark';
+        }
+        toggle.addEventListener('click', () => {
+          const isLight = document.body.classList.contains('light');
+          localStorage.setItem('biotics-theme', isLight ? 'dark' : 'light');
+        });
+      } catch (e) { /* ignore storage errors */ }
+    })();
   </script>
 </body>
 </html>
