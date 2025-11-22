@@ -147,7 +147,7 @@
                 fadeLetters.forEach((letter, index) => {
                     setTimeout(() => {
                         letter.style.animation = 'fadeOutLetter 1.2s ease forwards';
-                    }, index * 100);
+                    }, index * 200);
                 });
 
                 // Animate the dot moving closer to the 'b' and the 'b' moving
@@ -155,7 +155,7 @@
                     dot.style.animation = 'moveDot 1s ease forwards';
                     b.style.animation = 'moveb 1s ease forwards';
                 }, 1000);
-            }, 1200);
+            }, 1800);
         });
     </script>
 </body>
