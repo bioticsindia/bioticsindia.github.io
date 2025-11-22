@@ -12,6 +12,10 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --move-distance: 210px;
+        }
+
         body {
             background-color: #FFF;
             display: flex;
@@ -78,7 +82,7 @@
                 transform: translateX(0) scale(1);
             }
             100% {
-                transform: translateX(-210px) scale(2);
+                transform: translateX(calc(var(--move-distance) * -1)) scale(2);
             }
         }
 
@@ -87,18 +91,24 @@
                 transform: translateX(0) scale(1);
             }
             100% {
-                transform: translateX(210px) scale(2);
+                transform: translateX(var(--move-distance)) scale(2);
             }
         }
 
         /* Responsive font size for mobile */
         @media (max-width: 600px) {
+            :root {
+                --move-distance: 100px;
+            }
             .logo {
                 font-size: clamp(2rem, 12vw, 5rem);
             }
         }
 
         @media (max-width: 380px) {
+            :root {
+                --move-distance: 60px;
+            }
             .logo {
                 font-size: clamp(1.5rem, 10vw, 3rem);
             }
