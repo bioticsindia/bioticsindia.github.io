@@ -90,6 +90,19 @@
                 transform: translateX(210px) scale(2);
             }
         }
+
+        /* Responsive font size for mobile */
+        @media (max-width: 600px) {
+            .logo {
+                font-size: clamp(2rem, 12vw, 5rem);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo {
+                font-size: clamp(1.5rem, 10vw, 3rem);
+            }
+        }
     </style>
 </head>
 <body>
