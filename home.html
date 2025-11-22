@@ -156,7 +156,7 @@
       padding: 10px 18px;
       border-radius: 999px;
       background: var(--lavender);
-      color: #0b0b0b;
+      color: #fff;
       font-family: "Comfortaa", "Segoe UI", Roboto, sans-serif;
       border: none;
       cursor: pointer;
@@ -391,6 +391,51 @@
           localStorage.setItem('biotics-theme', isLight ? 'light' : 'dark');
         });
       } catch (e) { /* ignore storage errors */ }
+    })();
+
+    /* Email submission to Google Sheets */
+    (function() {
+      const emailInput = document.querySelector('.field[type="email"]');
+      const notifyBtn = document.querySelector('.btn');
+      
+      notifyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        
+        // Basic email validation
+        if (!email || !email.includes('@')) {
+          alert('Invalid Email');
+          return;
+        }
+        
+        // Google Form submission URL and entry ID
+        // Replace with your actual Google Form details:
+        // 1. Create a Google Form with an email field
+        // 2. Get the form ID from the URL: /forms/d/{FORM_ID}/
+        // 3. Inspect the form to find the entry ID for the email field
+        const FORM_ID = '1FAIpQLSd-siDIYYfV8pFlaiMK7vQJtFAgvGmjFn_gTpp44z_gxZJ6uQ';
+        const ENTRY_ID = 'entry.1731970355';
+        
+        const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+        
+        const formData = new FormData();
+        formData.append(`entry.${ENTRY_ID}`, email);
+        
+        // Send data to Google Form
+        fetch(formUrl, {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        })
+        .then(() => {
+          alert('Thank you! We will notify you soon.');
+          emailInput.value = '';
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to submit. Please try again.');
+        });
+      });
     })();
   </script>
 </body>
